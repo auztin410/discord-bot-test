@@ -1,0 +1,11 @@
+{
+    "name": "discord-bot-test",
+    "version": "1.0.0",
+    "description": "Just a test discord bot",
+    "main": "bot.js",
+    "author": "Austin Saflarske",
+    "dependencies": {
+        "discord.js": "^11.5.1",
+        "winston": "^3.2.1"
+    }
+}
