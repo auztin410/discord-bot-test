@@ -22,8 +22,15 @@ client.on('message', msg => {
     found = magicItems.filter(function(magicItem) {
       return item == magicItem.Name;
     });
-    if (msg.content.substring(0,5) === '!item' && found != undefined) {
-      msg.reply(found);
-      console.log(found);
+    if (msg.content.substring(0,5) === '!item' && found.length > 0) {
+      //console.log(found);
+      var response = "";
+      response = response + found[0].Name;
+      response = response + "\n" + "Type: " + found[0].Type;
+      response = response + "\n" + "Rarity: " + found[0].Rarity;
+      found[0].Description.map(element => {
+        response = response + "\n" + element;
+      });
+      msg.reply(response);
     }
   });
