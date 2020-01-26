@@ -5,6 +5,7 @@ const magicItems = require('./MagicItemsList.json');
 const axios = require('axios');
 
 var found = null;
+var randomNum;
 
 client.on('ready', () => {
 	console.log(`Logged in as ${client.user.tag}!`);
@@ -41,14 +42,10 @@ client.on('message', (msg) => {
 	if (msgCode === 'roll') {
 		var roll = msg.content.substring(5);
 		var res = roll.split(' ');
-		console.log(`Roll ${res[0]} ${res[1]} dice`);
-		var random = randomAPI(res[0], res[1]);
-		msg.reply(random);
-	}
-});
-
-function randomAPI(num, dice) {
-	axios
+		//console.log(`Roll ${res[0]} ${res[1]} dice`);
+		var num = res[0];
+		var dice = res[1];
+		axios
 		.post(`https://api.random.org/json-rpc/2/invoke`, {
 			jsonrpc: '2.0',
 			method: 'generateIntegers',
@@ -62,10 +59,17 @@ function randomAPI(num, dice) {
 			id: 42
 		})
 		.then((res) => {
-			console.log(`statusCode: ${res.statusCode}`);
+			var message = "";
 			console.log(res.data.result.random.data);
+			randomNum = res.data.result.random.data;
+			randomNum.forEach(element => {
+				message = message + " "  + element;
+			});
+			console.log(message);
+			msg.reply(message);
 		})
 		.catch((error) => {
 			console.error(error);
 		});
-}
+	}
+});
